@@ -1,0 +1,39 @@
+name: Anime Precache
+
+on:
+  # Her 2 günde bir saat 03:00 UTC (Türkiye 06:00)
+  schedule:
+    - cron: '0 3 */2 * *'
+  
+  # Manuel tetikleme (Actions sekmesinden)
+  workflow_dispatch:
+    inputs:
+      max_anime:
+        description: 'Kaç anime işlensin'
+        required: false
+        default: '16'
+
+jobs:
+  precache:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run precache
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+          BACKEND_URL: ${{ secrets.BACKEND_URL }}
+          MAX_ANIME: ${{ github.event.inputs.max_anime || '16' }}
+        run: node precache.js
