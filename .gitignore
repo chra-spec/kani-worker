@@ -1,0 +1,15 @@
+# Gizli dosyalar
+.env
+.env.*
+
+# Node
+node_modules/
+npm-debug.log*
+
+# Yedekler
+*.bak.*
+*.log
+
+# Termux özel
+.termux/
+deploy.js
