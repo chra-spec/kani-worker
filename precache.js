@@ -34,8 +34,10 @@ const CACHE_TTL_MS = 7 * 24 * 60 * 60 * 1000;
 
 const EPISODES_PER_ANIME = 5;
 const TOTAL_ANIME_POOL = 80;
-const TUR_ANIME_COUNT = 16;
-const TOTAL_TURS_FOR_5_EPS = TOTAL_ANIME_POOL / TUR_ANIME_COUNT;
+// ⚡ Tur anime sayısı MAX_ANIME ile senkron olsun — sabit 16 değil
+const TUR_ANIME_COUNT = MAX_ANIME_PER_RUN;
+// ⚡ 80 anime / her run'daki anime sayısı = kaç turda tam döner
+const TOTAL_TURS_FOR_5_EPS = Math.max(1, Math.ceil(TOTAL_ANIME_POOL / TUR_ANIME_COUNT));
 
 // ════ CLIENTS ════
 if (!SUPABASE_URL || !SUPABASE_KEY) {
